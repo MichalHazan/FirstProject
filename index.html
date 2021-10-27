@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
+    <title>TaskBoard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>My Task Board</h1>
+    <div class="form">
+        <table>
+            <tr>
+                <td> <label> The Task:</label> </td>
+                <td> <input type="text" id="taskInfo" required /> </td>
+            </tr>
+            <tr>
+                <td> <label> Date:</label> </td>
+                <td> <input type="date" id="taskDate" required /> </td>
+            </tr>
+            <tr>
+                <td> <label> Time:</label> </td>
+                <td> <input type="time" id="taskTime" required /> </td>
+            </tr>
+        </table>
+        <button type="button" class="btn btn-outline-primary btn-lg" id="savebtn">Save</button>
+        <button type="button" class="btn btn-outline-warning btn-lg" id="Resetbtn">Reset</button>
+
+    </div>
+    <div class="notesDiv">
+        <div class="note"><button class="delNote"><i class="bi bi-x del"></i></button>
+            <div class="info">
+                Loremxxxxxxxxxxx dolor sitxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx at
+                laborum unde quam ipsam, nobis
+            </div>
+            <div class="timeDiv">
+                <p>24/20/1999</p>
+                <p>17:55</p>
+            </div>
+        </div>
+
+    </div>
+
+    
+
+    <script src="index.js"></script>
+</body>
+
+</html>
