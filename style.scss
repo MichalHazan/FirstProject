@@ -19,6 +19,8 @@ body{
     text-align: center;
     background-image: url('pic/tile.jpg');
 }
+
+
 .form{
     text-align: center;
     padding: 1px 10% 1px 10%;
@@ -41,7 +43,6 @@ body{
         outline: none;
     }
     button{
-        margin: 10px 45px 10px 25px;
         font-weight: bold;
     }
 
@@ -84,6 +85,19 @@ body{
         color: red;
         opacity: 70%;
     }
+    .editNote{
+        position: relative;
+        top: 2%;
+        right: 50%;
+        cursor: pointer;
+        background:none;
+        border: none;
+        visibility: hidden;
+    }
+    .editNote:hover{
+        color: rgb(0, 83, 11);
+        opacity: 70%;
+    }
     .info{
        
         height: calc(35vh - 45%);
@@ -103,6 +117,9 @@ body{
 }
 .note:hover{
     .delNote{
+        visibility: visible;
+    }
+    .editNote{
         visibility: visible;
     }
 

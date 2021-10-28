@@ -49,7 +49,6 @@ body {
 }
 
 .form button {
-  margin: 10px 45px 10px 25px;
   font-weight: bold;
 }
 
@@ -110,6 +109,21 @@ body {
   opacity: 70%;
 }
 
+.note .editNote {
+  position: relative;
+  top: 2%;
+  right: 50%;
+  cursor: pointer;
+  background: none;
+  border: none;
+  visibility: hidden;
+}
+
+.note .editNote:hover {
+  color: #00530b;
+  opacity: 70%;
+}
+
 .note .info {
   height: calc(35vh - 45%);
   overflow-y: scroll;
@@ -129,6 +143,10 @@ body {
 }
 
 .note:hover .delNote {
+  visibility: visible;
+}
+
+.note:hover .editNote {
   visibility: visible;
 }
 /*# sourceMappingURL=style.css.map */

@@ -1,3 +1,5 @@
+let editbtn = document.querySelector("#editbtn")
+editbtn.style.display = "none"
 /* האינפוטים שבהם מכניס המשתמש את פרטי המשימה
 */
 const taskInfo = document.querySelector("#taskInfo")
@@ -21,21 +23,31 @@ function ResetFunction() {
 
 // -------------------------
 function ShowTasks() {
+    notesDiv.innerHTML = ""
     let tasksStorge = JSON.parse(localStorage.getItem("tasks"))
     for (let j = 0; j < tasksStorge.length; j++) {
         CreateNote(tasksStorge[j].infoTask, tasksStorge[j].dateTask, tasksStorge[j].timeTaks)
     }
 }
 ShowTasks()
+//----עיצוב תאריך----
+function convertDigitIn(str) {
+    return str.split('-').reverse().join('/');
+}
+//----  חזרה למקור עיצוב תאריך----
+function convertDigitAgain(str) {
+    return str.split('/').reverse().join('-');
+}
 //---הוספת משימה---------
-const savebtn = document.querySelector("#savebtn")
+let savebtn = document.querySelector("#savebtn")
+
 savebtn.addEventListener('click', function () {
     //קודם נבדוק שמילאו שדות חובה
     if (!taskInfo.value || !taskDate.value || !taskTime.value) {
         alert("יש למלא את כל השדות")
     } else {
         //יצירת פתק
-        CreateNote(taskInfo.value, taskDate.value, taskTime.value)
+        CreateNote(taskInfo.value, convertDigitIn(taskDate.value), taskTime.value)
     }
 })
 //---------פוקנציה ליצירת פתק מקבלת את מידע המשימה, התאריך והזמן------------
@@ -67,6 +79,35 @@ function CreateNote(information, dateof, timeof) {
         e.target.parentElement.parentElement.remove()
     })
     //-------------------------------------------
+    const editNote = document.createElement("button")
+    editNote.className = "editNote"
+    editNote.innerHTML = "<i class='bi bi-pencil'></i>"
+    //----------------edit note----------------------
+    editNote.addEventListener('click', function (ev) {
+        let taskCheckb = ev.target.parentElement.parentElement.querySelector(".info").textContent
+        for (let i = 0; i < tasks.length; i++) {
+            if (tasks[i].infoTask == taskCheckb) {
+
+                taskInfo.value = tasks[i].infoTask
+                taskDate.value = convertDigitAgain(tasks[i].dateTask)
+                taskTime.value = tasks[i].timeTaks
+                savebtn.style.display = "none"
+                editbtn.style.display = "block"
+                editbtn.addEventListener('click', function () {
+                    tasks[i].infoTask = taskInfo.value
+                    tasks[i].dateTask = convertDigitIn(taskDate.value)
+                    tasks[i].timeTaks = taskTime.value
+                    savebtn.style.display = "block"
+                    editbtn.style.display = "none"
+                    ResetFunction()
+                    localStorage.setItem("tasks", JSON.stringify(tasks));
+                    ShowTasks()
+                })
+
+            }
+        }
+    })
+    //-------------------------------------------
 
     info.textContent = information
     Pdate.textContent = dateof
@@ -79,6 +120,7 @@ function CreateNote(information, dateof, timeof) {
     timeDiv.appendChild(Pdate)
     timeDiv.appendChild(Ptime)
     note.appendChild(delNote)
+    note.appendChild(editNote)
     note.appendChild(info)
     note.appendChild(timeDiv)
     notesDiv.appendChild(note)
