@@ -23,11 +23,10 @@ function ResetFunction() {
 function ShowTasks() {
     let tasksStorge = JSON.parse(localStorage.getItem("tasks"))
     for (let j = 0; j < tasksStorge.length; j++) {
-        CreateNote(tasksStorge[j].infoTask , tasksStorge[j].dateTask , tasksStorge[j].timeTaks )
+        CreateNote(tasksStorge[j].infoTask, tasksStorge[j].dateTask, tasksStorge[j].timeTaks)
     }
 }
 ShowTasks()
-
 //---הוספת משימה---------
 const savebtn = document.querySelector("#savebtn")
 savebtn.addEventListener('click', function () {
@@ -35,16 +34,13 @@ savebtn.addEventListener('click', function () {
     if (!taskInfo.value || !taskDate.value || !taskTime.value) {
         alert("יש למלא את כל השדות")
     } else {
-        
         //יצירת פתק
-
-        CreateNote(taskInfo.value , taskDate.value , taskTime.value )
-
+        CreateNote(taskInfo.value, taskDate.value, taskTime.value)
     }
 })
-
-function CreateNote(information , dateof , timeof) {
-
+//---------פוקנציה ליצירת פתק מקבלת את מידע המשימה, התאריך והזמן------------
+function CreateNote(information, dateof, timeof) {
+    //------יצירת האלמנטיים ועיצובם של הפתק-----------
     const note = document.createElement("div")
     note.className = "note"
     const info = document.createElement("div")
@@ -75,11 +71,11 @@ function CreateNote(information , dateof , timeof) {
     info.textContent = information
     Pdate.textContent = dateof
     Ptime.textContent = timeof
-
+    //------הכנסה למערך המשימות---
     tasks.push({ infoTask: information, dateTask: dateof, timeTaks: timeof })
     // ---שמירה בזיכרון----
     localStorage.setItem("tasks", JSON.stringify(tasks));
-    
+    //------אימוץ אלמנטים לתצוגה------
     timeDiv.appendChild(Pdate)
     timeDiv.appendChild(Ptime)
     note.appendChild(delNote)
