@@ -1,3 +1,6 @@
+let editbtn = document.querySelector("#editbtn")
+editbtn.style.display = "none"
+let index = 0;
 /* האינפוטים שבהם מכניס המשתמש את פרטי המשימה
 */
 const taskInfo = document.querySelector("#taskInfo")
@@ -80,6 +83,26 @@ function CreateNote(information, dateof, timeof) {
         e.target.parentElement.parentElement.remove()
     })
     //-------------------------------------------
+    const editNote = document.createElement("button")
+    editNote.className = "editNote"
+    editNote.innerHTML = "<i class='bi bi-pencil'></i>"
+    //----------------edit note----------------------
+    editNote.addEventListener("click", function (ev) {
+        let taskCheckinfo = ev.target.parentElement.parentElement.querySelector(".info").textContent
+        editbtn.style.display = "block"
+        savebtn.style.display = "none"
+        for (let i = 0; i < tasks.length; i++) {
+            if (tasks[i].infoTask == taskCheckinfo) {
+                index = i;
+                taskInfo.value = tasks[index].infoTask
+                taskDate.value = convertDigitAgain(tasks[index].dateTask)
+                taskTime.value = tasks[index].timeTaks
+                console.log(index);
+
+            }
+        }
+    })
+
 
     //-------------------------------------------
 
@@ -94,6 +117,7 @@ function CreateNote(information, dateof, timeof) {
     timeDiv.appendChild(Pdate)
     timeDiv.appendChild(Ptime)
     note.appendChild(delNote)
+    note.appendChild(editNote)
     note.appendChild(info)
     note.appendChild(timeDiv)
     notesDiv.appendChild(note)
@@ -102,7 +126,23 @@ function CreateNote(information, dateof, timeof) {
     ResetFunction()
 
 }
+// editbtn.addEventListener("click",EditNoteFunction(index))
+function EditNoteFunction(index) {
+    tasks[index].infoTask = taskInfo.value
+    tasks[index].dateTask = convertDigitIn(taskDate.value)
+    tasks[index].timeTaks = taskTime.value
 
+
+    console.log(index);
+    console.log(tasks[index]);
+    console.log(tasks);
+    ResetFunction()
+    editbtn.style.display = "none"
+    savebtn.style.display = "block"
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    ShowTasks()
+
+}
 
 
 ///----------------------------------------
