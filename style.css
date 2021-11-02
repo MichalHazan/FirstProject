@@ -31,6 +31,8 @@ body {
   background-repeat: repeat;
   font-family: "Niconne", cursive;
   font-size: 26px;
+  -webkit-box-shadow: 5px 10px 8px #0a00008f;
+          box-shadow: 5px 10px 8px #0a00008f;
 }
 
 .form label {
@@ -135,6 +137,7 @@ body {
 .note .timeDiv {
   position: relative;
   right: 20%;
+  padding-bottom: 2px;
 }
 
 .note .timeDiv p {

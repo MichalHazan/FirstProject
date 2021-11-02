@@ -1,13 +1,15 @@
 let editbtn = document.querySelector("#editbtn")
 editbtn.style.display = "none"
 let index = 0;
+
+const colorfull = ["pic/Sticky_Note_Blue.png", "pic/notebg.png", "pic/green.png", "pic/bp.png"]
 /* האינפוטים שבהם מכניס המשתמש את פרטי המשימה
 */
 const taskInfo = document.querySelector("#taskInfo")
 const taskDate = document.querySelector("#taskDate")
 const taskTime = document.querySelector("#taskTime")
 //-----אובייקט המשימות-----
-const tasks = []
+let tasks = []
 /*--- הדיב לכל הפתקים---- */
 const notesDiv = document.querySelector(".notesDiv")
 //----------------------------
@@ -25,6 +27,7 @@ function ResetFunction() {
 // -------------------------
 function ShowTasks() {
     notesDiv.innerHTML = ""
+    
     if (localStorage.getItem("tasks") != null) {
 
         let tasksStorge = JSON.parse(localStorage.getItem("tasks"))
@@ -54,8 +57,12 @@ savebtn.addEventListener('click', function () {
         CreateNote(taskInfo.value, convertDigitIn(taskDate.value), taskTime.value)
     }
 })
+
 //---------פוקנציה ליצירת פתק מקבלת את מידע המשימה, התאריך והזמן------------
 function CreateNote(information, dateof, timeof) {
+    //החלפת צבע פתק
+    let x = parseInt(Math.random() * colorfull.length)
+
     //------יצירת האלמנטיים ועיצובם של הפתק-----------
     const note = document.createElement("div")
     note.className = "note"
@@ -76,9 +83,9 @@ function CreateNote(information, dateof, timeof) {
             if (tasks[i].infoTask == taskCheck) {
                 tasks.splice(i, 1)
                 // ---שמירה בזיכרון----
-                localStorage.setItem("tasks", JSON.stringify(tasks));
             }
         }
+        localStorage.setItem("tasks", JSON.stringify(tasks));
         //-----מחיקה מהתצוגה-----
         e.target.parentElement.parentElement.remove()
     })
@@ -110,10 +117,12 @@ function CreateNote(information, dateof, timeof) {
     Pdate.textContent = dateof
     Ptime.textContent = timeof
     //------הכנסה למערך המשימות---
+    
     tasks.push({ infoTask: information, dateTask: dateof, timeTaks: timeof })
     // ---שמירה בזיכרון----
     localStorage.setItem("tasks", JSON.stringify(tasks));
     //------אימוץ אלמנטים לתצוגה------
+    note.style.backgroundImage = "url(" + colorfull[x] + ")"
     timeDiv.appendChild(Pdate)
     timeDiv.appendChild(Ptime)
     note.appendChild(delNote)
@@ -140,6 +149,8 @@ function EditNoteFunction(index) {
     editbtn.style.display = "none"
     savebtn.style.display = "block"
     localStorage.setItem("tasks", JSON.stringify(tasks));
+  
+    tasks=[]
     ShowTasks()
 
 }
