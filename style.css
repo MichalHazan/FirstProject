@@ -96,6 +96,14 @@ body {
   background-size: 15vw 40vh;
 }
 
+.note .CreatedDate {
+  position: absolute;
+  font-size: 10px;
+  margin-top: 25px;
+  margin-left: 15px;
+  font-family: "Caveat", cursive;
+}
+
 .note .delNote {
   position: relative;
   top: 2%;

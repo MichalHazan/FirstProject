@@ -73,6 +73,14 @@ body{
     background-image: url('pic/notebg.png');
     background-repeat: no-repeat;
     background-size: 15vw 40vh;
+    .CreatedDate{
+        position: absolute;
+        font-size: 10px;
+        margin-top: 25px;
+        margin-left: 15px;
+        font-family:$TitleFont;
+        
+    }
     .delNote{
         position: relative;
         top: 2%;

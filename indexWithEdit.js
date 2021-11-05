@@ -1,8 +1,16 @@
 let editbtn = document.querySelector("#editbtn")
 editbtn.style.display = "none"
 let index = 0;
+//----תאריך יצירת פתק------
+let TodayDate = new Date()
+let CreatedDate = TodayDate.getDate() + "/" + (TodayDate.getMonth() + 1) + "/" + TodayDate.getFullYear()
+console.log(CreatedDate);
+const created = document.createElement("p")
+created.className = "CreatedDate"
+created.textContent = "created: " + CreatedDate
+// --------------------------------------
 
-const colorfull = ["pic/Sticky_Note_Blue.png", "pic/notebg.png", "pic/green.png", "pic/bp.png"]
+const colorfull = ["pic/Sticky_Note_Blue.png", "pic/notebg.png", "pic/bp.png"]
 /* האינפוטים שבהם מכניס המשתמש את פרטי המשימה
 */
 const taskInfo = document.querySelector("#taskInfo")
@@ -27,12 +35,12 @@ function ResetFunction() {
 // -------------------------
 function ShowTasks() {
     notesDiv.innerHTML = ""
-    
+
     if (localStorage.getItem("tasks") != null) {
 
         let tasksStorge = JSON.parse(localStorage.getItem("tasks"))
         for (let j = 0; j < tasksStorge.length; j++) {
-            CreateNote(tasksStorge[j].infoTask, tasksStorge[j].dateTask, tasksStorge[j].timeTaks)
+            CreateNote(tasksStorge[j].infoTask, tasksStorge[j].dateTask, tasksStorge[j].timeTaks, tasksStorge[j].createdTask)
         }
     }
 }
@@ -54,16 +62,19 @@ savebtn.addEventListener('click', function () {
         alert("יש למלא את כל השדות")
     } else {
         //יצירת פתק
-        CreateNote(taskInfo.value, convertDigitIn(taskDate.value), taskTime.value)
+        CreateNote(taskInfo.value, convertDigitIn(taskDate.value), taskTime.value, created.textContent)
     }
 })
 
 //---------פוקנציה ליצירת פתק מקבלת את מידע המשימה, התאריך והזמן------------
-function CreateNote(information, dateof, timeof) {
+function CreateNote(information, dateof, timeof, createdTaskDate) {
     //החלפת צבע פתק
     let x = parseInt(Math.random() * colorfull.length)
 
     //------יצירת האלמנטיים ועיצובם של הפתק-----------
+    const created = document.createElement("p")
+    created.className = "CreatedDate"
+    created.textContent = createdTaskDate
     const note = document.createElement("div")
     note.className = "note"
     const info = document.createElement("div")
@@ -82,9 +93,9 @@ function CreateNote(information, dateof, timeof) {
         for (let i = 0; i < tasks.length; i++) {
             if (tasks[i].infoTask == taskCheck) {
                 tasks.splice(i, 1)
-                // ---שמירה בזיכרון----
             }
         }
+        // ---שמירה בזיכרון----
         localStorage.setItem("tasks", JSON.stringify(tasks));
         //-----מחיקה מהתצוגה-----
         e.target.parentElement.parentElement.remove()
@@ -117,14 +128,15 @@ function CreateNote(information, dateof, timeof) {
     Pdate.textContent = dateof
     Ptime.textContent = timeof
     //------הכנסה למערך המשימות---
-    
-    tasks.push({ infoTask: information, dateTask: dateof, timeTaks: timeof })
+
+    tasks.push({ infoTask: information, dateTask: dateof, timeTaks: timeof, createdTask: createdTaskDate })
     // ---שמירה בזיכרון----
     localStorage.setItem("tasks", JSON.stringify(tasks));
     //------אימוץ אלמנטים לתצוגה------
     note.style.backgroundImage = "url(" + colorfull[x] + ")"
     timeDiv.appendChild(Pdate)
     timeDiv.appendChild(Ptime)
+    note.appendChild(created)
     note.appendChild(delNote)
     note.appendChild(editNote)
     note.appendChild(info)
@@ -149,8 +161,8 @@ function EditNoteFunction(index) {
     editbtn.style.display = "none"
     savebtn.style.display = "block"
     localStorage.setItem("tasks", JSON.stringify(tasks));
-  
-    tasks=[]
+
+    tasks = []
     ShowTasks()
 
 }
