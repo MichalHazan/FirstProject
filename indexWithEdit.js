@@ -1,6 +1,42 @@
+// localStorage.removeItem("pics")
 let editbtn = document.querySelector("#editbtn")
 editbtn.style.display = "none"
 let index = 0;
+//----------Add picture------------------
+const pics = []
+let Add_pictuer = document.querySelector("#Add_pictuer")
+Add_pictuer.addEventListener("click", () => {
+    let imgUrl = prompt("Write URL image")
+    AddPic(imgUrl)
+})
+let picID = 0
+function AddPic(imgUrl) {
+    let backG = ""
+    if (imgUrl.startsWith("url")) {
+        backG = imgUrl
+    } else { backG = "url(" + imgUrl + ")" }
+    const note = document.createElement("div")
+    note.className = "note"
+    note.id = picID
+    note.style.backgroundImage = backG
+    // --delete pic--
+    const delpic = document.createElement("button")
+    delpic.className = "delNote"
+    delpic.innerHTML = "<i class='bi bi-x del'></i>"
+    delpic.addEventListener("click", e => {
+        console.log(e.target.parentElement.parentElement.id);
+        pics.splice(parseInt(e.target.parentElement.parentElement.id), 1)
+        localStorage.setItem("pics", JSON.stringify(pics))
+        e.target.parentElement.parentElement.remove()
+    })
+    // ----
+    note.appendChild(delpic)
+    notesDiv.appendChild(note)
+    pics.push({ url: backG, id: picID })
+    localStorage.setItem("pics", JSON.stringify(pics))
+    picID++
+}
+//---------------------
 //----תאריך יצירת פתק------
 let TodayDate = new Date()
 let CreatedDate = TodayDate.getDate() + "/" + (TodayDate.getMonth() + 1) + "/" + TodayDate.getFullYear()
@@ -35,7 +71,6 @@ function ResetFunction() {
 // -------------------------
 function ShowTasks() {
     notesDiv.innerHTML = ""
-
     if (localStorage.getItem("tasks") != null) {
 
         let tasksStorge = JSON.parse(localStorage.getItem("tasks"))
@@ -43,6 +78,14 @@ function ShowTasks() {
             CreateNote(tasksStorge[j].infoTask, tasksStorge[j].dateTask, tasksStorge[j].timeTaks, tasksStorge[j].createdTask)
         }
     }
+    console.log(localStorage.getItem("pics"));
+    if (localStorage.getItem("pics") != null) {
+        let picsShow = JSON.parse(localStorage.getItem("pics"))
+        for (let pi = 0; pi < picsShow.length; pi++) {
+            AddPic(picsShow[pi].url)
+        }
+    }
+
 }
 ShowTasks()
 //----עיצוב תאריך----
